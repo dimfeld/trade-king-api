@@ -41,7 +41,7 @@ class tradekingApi {
     let url = `${this.apiEndPoint}/${endpoint}.${this.responseType}`;
     if (queryParam) {
       url = `${this.apiEndPoint}/${endpoint}.${this.responseType}?${queryParam}`;
-    } 
+    }
 
     if (stream) {
       url = url.replace(/api/i, 'stream');
@@ -71,7 +71,7 @@ class tradekingApi {
             return resolve(JSON.parse(data));
           }
         );
-      } 
+      }
     });
   }
 
@@ -110,7 +110,7 @@ class tradekingApi {
     let queryString = '';
     _(strings).forEach((string, key) => {
       if (!values[key]) return false;
-      queryString += queryString + string + '=' + values[key];
+      queryString += queryString + string + values[key];
     });
 
     return queryString;
@@ -144,13 +144,13 @@ class tradekingApi {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/orders`);
   }
-  
+
   postAccountOrder(id, order) {
    this._validateId(id);
    const postBody = this._buildFxml(order);
    return this._getApiEndPoint(`accounts/${id}/orders`, null, null, { useGet: false, postBody });
   }
-  
+
   balanceForAccount(id) {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/balances`);
@@ -172,10 +172,10 @@ class tradekingApi {
     ];
     if (range && !validRangeTypes.includes(range)) this._throwError('Invalid range passed');
     if (transactions && !validTransactionTypes.includes(transaction)) this._throwError('Invalid transaction passed');
-    
+
     return this._getApiEndPoint(`accounts/${id}/history`, this._trimQueryStrings`range=${range}&transactions=${transactions}`);
   }
-  
+
   holdingsForAccount(id) {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/holdings`);
@@ -227,7 +227,7 @@ class tradekingApi {
       formatedFids = formatedFids.join(',');
     }
     if (stream) return this._getApiEndPoint(`market/quotes`, this._trimQueryStrings`symbols=${formatedSymbols}&fids=${formatedFids}`, stream);
-    return this._getApiEndPoint(`market/ext/quotes`, this.trimedQueryStrings`symbols=${formatedSymbols}&fids${formatedFids}`, stream);
+    return this._getApiEndPoint(`market/ext/quotes`, this._trimQueryStrings`symbols=${formatedSymbols}&fids=${formatedFids}`, stream);
   }
 
   streamMarketQuotesForSymbols(options) {
